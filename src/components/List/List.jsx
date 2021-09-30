@@ -3,16 +3,15 @@ import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, 
 import useStyles from './styles';
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
-const List = ({ places, childClicked, isLoading }) => {
+const List = ({ places, childClicked, isLoading, type, setType, rating, setRating }) => {
   const classes = useStyles();
-  const [type, setType] = useState('restaurants');
-  const [rating, setRating] = useState('');
+
   const [elRefs, setElRefs] = useState([]);
 
-  // console.log({ childClicked });
-
   useEffect(() => {
-    setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+    if (places) {
+      setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+    }
   }, [places]);
 
   return (
@@ -23,7 +22,7 @@ const List = ({ places, childClicked, isLoading }) => {
       </div>) : (<>
         <FormControl className={classes.formControl}>
           <InputLabel>Type</InputLabel>
-          <Select value={type} onChange={setType} >
+          <Select value={type} onChange={(e) => setType(e.target.value)} >
             <MenuItem value="restaurants">Restaurants</MenuItem>
             <MenuItem value="hotels">Hotels</MenuItem>
             <MenuItem value="attractions">Attractions</MenuItem>
@@ -31,7 +30,7 @@ const List = ({ places, childClicked, isLoading }) => {
         </FormControl>
         <FormControl className={classes.formControl}>
           <InputLabel>Rating</InputLabel>
-          <Select value={rating} onChange={setRating} >
+          <Select value={rating} onChange={(e) => setRating(e.target.value)} >
             <MenuItem value={0}>All</MenuItem>
             <MenuItem value={3}>Above 3.0</MenuItem>
             <MenuItem value={4}>Above 4.0</MenuItem>
