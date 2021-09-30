@@ -12,7 +12,7 @@ const Map = ({ setCoordinates, setBounds, coordinates, places, setChildClicked }
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyB36hV1zvAbSFjeo59OaJTzBWy2vrGvvfM' }}
+        bootstrapURLKeys={{ key: 'AIzaSyDenv582ktmKOok9zxBC9A88MlzIx2ijto' }}
         defaultCenter={{ lat: 0, lng: 0 }}
         center={coordinates}
         defaultZoom={14}
@@ -23,7 +23,10 @@ const Map = ({ setCoordinates, setBounds, coordinates, places, setChildClicked }
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        onChildClick={setChildClicked}
+        onChildClick={(child) => {
+          console.log('clicked child', child);
+          setChildClicked(child);
+        }}
       >
         {places?.map((place) => (
           <div className={classes.markerContainer} lat={Number(place.latitude)} lng={Number(place.longitude)} >
